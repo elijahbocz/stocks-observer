@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Stocks Observer</string>
+    <string name="edit_message"></string>
+    <string name="button_search">SEARCH</string>
+    <string name="text_instr">Enter in a stock ticker symbol (TSLA, AAPL):</string>
+    <string name="error"></string>
+
+    <!--  STOCK PAGE  -->
+    <string name="stock_symbol"></string>
+    <string name="stock_name"></string>
+    <string name="stock_industry"></string>
+    <string name="stock_exchange"></string>
+    <string name="stock_website"></string>
+
+    <string name="stock_symbol_label">Symbol: </string>
+    <string name="stock_name_label">Name:</string>
+    <string name="stock_industry_label">Industry:</string>
+    <string name="stock_exchange_label">Exchange:</string>
+    <string name="stock_website_label">Website:</string>
+
+    <string name="stock_price">Price</string>
+    <string name="stock_change">Change</string>
+    <string name="stock_change_percent">Change %</string>
+    <string name="stock_day_range">Day Range</string>
+
+    <string name="price"></string>
+    <string name="change"></string>
+    <string name="change_percent"></string>
+    <string name="day_range"></string>
+
+    <string name="price_source_label">Source: </string>
+    <string name="latest_time_label">Updated: </string>
+    <string name="price_source"></string>
+    <string name="latest_time"></string>
+
+    <string name="market_cap_label">Market Cap: </string>
+    <string name="employees_label">Employees: </string>
+    <string name="week_52_label">52 Week Range: </string>
+    <string name="pe_ratio_label">PE Ratio: </string>
+    <string name="beta_label">Beta: </string>
+    <string name="dividend_yield_label">Dividend Yield: </string>
+
+    <string name="market_cap"></string>
+    <string name="employees"></string>
+    <string name="week_52"></string>
+    <string name="pe_ratio"></string>
+    <string name="beta"></string>
+    <string name="dividend_yield"></string>
+
+    <!-- GRAPHS -->
+    <string name="graphs_button">View Graphs</string>
+    <string name="graphs_symbol"></string>
+    <string name="week_label">Prices over the past week:</string>
+    <string name="month_label">Prices over the past month:</string>
+    <string name="half_year_label">Prices over the past half year:</string>
+    <string name ="year_label">Prices overs the past year:</string>
+
+
+</resources>
