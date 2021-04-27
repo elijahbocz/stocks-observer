@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 
 
 public class VolleyActivity extends AppCompatActivity {
+    RequestQueue queue = RequestQueueSingleton.getInstance(this).getRequestQueue();
     private String symbol;
     public static final String EXTRA_MESSAGE = "com.elijahbocz.stockstats.MESSAGE";
 
@@ -46,7 +47,6 @@ public class VolleyActivity extends AppCompatActivity {
     }
 
     protected void getStockInfo() {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
         final String url = "https://cloud.iexapis.com/stable/stock/" + symbol + "/company?token=sk_fb4b6af652034c53a2f4321ef9e9159d&period=annual";
         JsonObjectRequest stockCompany = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -80,7 +80,7 @@ public class VolleyActivity extends AppCompatActivity {
                 VolleyLog.wtf(error.getMessage(), "utf-8");
             }
         });
-        requestQueue.add(stockCompany);
+        queue.add(stockCompany);
 
         final String logoUrl = "https://cloud.iexapis.com/stable/stock/" + symbol + "/logo?token=sk_fb4b6af652034c53a2f4321ef9e9159d&period=annual";
         JsonObjectRequest stockLogo = new JsonObjectRequest(logoUrl, null, new Response.Listener<JSONObject>() {
@@ -100,11 +100,10 @@ public class VolleyActivity extends AppCompatActivity {
                 VolleyLog.wtf(error.getMessage(), "utf-8");
             }
         });
-        requestQueue.add(stockLogo);
+        queue.add(stockLogo);
     }
 
     protected void getStockQuote() {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
         final String url = "https://cloud.iexapis.com/stable/stock/" + symbol + "/quote?token=sk_fb4b6af652034c53a2f4321ef9e9159d&period=annual";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -133,10 +132,11 @@ public class VolleyActivity extends AppCompatActivity {
                     changeTextView.setText(change);
                     changePercentTextView.setText(new DecimalFormat("#.###").format(changePercent));
                     if (dayLow != null && !dayLow.isEmpty()) {
-                        dayRangeTextView.setText("Markets are currently closed");
-                    } else {
                         dayRangeTextView.setText(dayLow + " - " + dayHigh);
+                    } else {
+                        dayRangeTextView.setText("Markets are currently closed");
                     }
+                    dayRangeTextView.setText("694.60 - 719.14");
 
                     if (Double.parseDouble(change) < 0) {
                         changeTextView.setTextColor(Color.parseColor("#C2303D"));
@@ -155,11 +155,10 @@ public class VolleyActivity extends AppCompatActivity {
                 VolleyLog.wtf(error.getMessage(), "utf-8");
             }
         });
-        requestQueue.add(jsonObjectRequest);
+        queue.add(jsonObjectRequest);
     }
 
     protected void getKeyStats() {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
         final String url = "https://cloud.iexapis.com/stable/stock/" + symbol + "/stats?token=sk_fb4b6af652034c53a2f4321ef9e9159d&period=annual";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -200,7 +199,7 @@ public class VolleyActivity extends AppCompatActivity {
                 VolleyLog.wtf(error.getMessage(), "utf-8");
             }
         });
-        requestQueue.add(jsonObjectRequest);
+        queue.add(jsonObjectRequest);
     }
 
     protected String getReadableMarketCap(String marketCap) {

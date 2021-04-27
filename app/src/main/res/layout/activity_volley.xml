@@ -249,7 +249,7 @@
                 <TextView
                     android:id="@+id/stock_day_range_label"
                     android:layout_width="75dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:background="@color/dark_blue"
                     android:padding="6dp"
                     android:text="@string/stock_day_range"

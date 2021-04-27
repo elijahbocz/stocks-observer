@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.elijahbocz.stockstats.MESSAGE";
-    private boolean resIsValid = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +40,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void isValidSymbol(String symbol) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        if (symbol.length() > 5 || symbol.length() < 1) {
+            handleValidSymbol(symbol, false);
+            return;
+        }
+        RequestQueue queue = RequestQueueSingleton.getInstance(this).getRequestQueue();
         VolleyLog.wtf("Symbol: " + symbol);
         final String url = "https://cloud.iexapis.com/stable/stock/" + symbol + "/company?token=sk_fb4b6af652034c53a2f4321ef9e9159d&period=annual";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                VolleyLog.wtf(response.toString());
                 handleValidSymbol(symbol, true);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.wtf(error.getMessage(), "utf-8");
                 handleValidSymbol(symbol, false);
             }
         });
-        requestQueue.add(jsonObjectRequest);
+        queue.add(jsonObjectRequest);
     }
 
     public void handleValidSymbol(String symbol, boolean isValid) {
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             TextView errorTextView = (TextView) findViewById(R.id.error);
-            errorTextView.setText("Please enter a valid symbol");
+            errorTextView.setText(symbol + " is not a valid symbol");
             errorTextView.setTextColor(Color.parseColor("#e63946"));
         }
     }

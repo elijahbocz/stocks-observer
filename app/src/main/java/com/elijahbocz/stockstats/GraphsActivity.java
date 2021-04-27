@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class GraphsActivity extends AppCompatActivity {
+    RequestQueue queue = RequestQueueSingleton.getInstance(this).getRequestQueue();
     private String symbol;
     private static final String TAG = GraphsActivity.class.getSimpleName();
 
@@ -62,7 +63,6 @@ public class GraphsActivity extends AppCompatActivity {
         Date to_date1 = cal.getTime();
         String date_from = dateFormat.format(to_date1);
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
         final String url = "http://api.marketstack.com/v1/eod?access_key=834f9898821638887c36d4ac835de85e&symbols=" + symbol + "&sort=ASC&interval=3hour&date_from=" + date_from + "&date_to=" + date_to;
         Log.d(TAG, url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
@@ -94,7 +94,7 @@ public class GraphsActivity extends AppCompatActivity {
                 VolleyLog.wtf(error.getMessage(), "utf-8");
             }
         });
-        requestQueue.add(jsonObjectRequest);
+        queue.add(jsonObjectRequest);
     }
 
     protected void getPastMonthData() {
@@ -104,12 +104,11 @@ public class GraphsActivity extends AppCompatActivity {
         String date_to = dateFormat.format(date);
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -30 );
+        cal.add(Calendar.DATE, -46 );
         Date to_date1 = cal.getTime();
         String date_from = dateFormat.format(to_date1);
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        final String url = "http://api.marketstack.com/v1/eod?access_key=834f9898821638887c36d4ac835de85e&symbols=" + symbol + "&sort=ASC&interval=3hour&date_from=" + date_from + "&date_to=" + date_to;
+        final String url = "http://api.marketstack.com/v1/eod?access_key=834f9898821638887c36d4ac835de85e&symbols=" + symbol + "&sort=ASC&interval=6hour&date_from=" + date_from + "&date_to=" + date_to;
         Log.d(TAG, url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -125,13 +124,14 @@ public class GraphsActivity extends AppCompatActivity {
                         Log.d(TAG, arr.getJSONObject(i).toString());
                         String high = arr.getJSONObject(i).getString("high");
                         float fhigh = Float.parseFloat(high);
-                        String day = String.valueOf(parts[2].charAt(0));
-                        day += String.valueOf(parts[2].charAt(1));
-                        lineEntries.add(new Entry(Float.parseFloat(day), fhigh));
+                        lineEntries.add(new Entry(i, fhigh));
                     }
+                    Log.d(TAG, "----\n");
+                    Log.d(TAG, arr.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                System.out.println(lineEntries.toString());
                 createGraph(lineChart, lineEntries, "Prices over that past month");
             }
         }, new Response.ErrorListener() {
@@ -140,7 +140,7 @@ public class GraphsActivity extends AppCompatActivity {
                 VolleyLog.wtf(error.getMessage(), "utf-8");
             }
         });
-        requestQueue.add(jsonObjectRequest);
+        queue.add(jsonObjectRequest);
     }
 
     protected void createGraph(LineChart lineChart, ArrayList<Entry> lineEntries, String description) {
@@ -171,6 +171,7 @@ public class GraphsActivity extends AppCompatActivity {
 //                lineChart.getAxisLeft().addLimitLine(lowerLimitLine(2,"Lower Limit",2,12,getColor("defaultOrange"),getColor("defaultOrange")));
 //                lineChart.getAxisLeft().addLimitLine(upperLimitLine(5,"Upper Limit",2,12,getColor("defaultGreen"),getColor("defaultGreen")));
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+        lineChart.getXAxis().setDrawLabels(false);
         lineChart.animateY(1000);
         lineChart.getXAxis().setGranularityEnabled(true);
         lineChart.getXAxis().setGranularity(1.0f);
