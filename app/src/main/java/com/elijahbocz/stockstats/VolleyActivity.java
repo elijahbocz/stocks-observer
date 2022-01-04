@@ -113,15 +113,12 @@ public class VolleyActivity extends AppCompatActivity {
                     TextView priceTextView = (TextView) findViewById(R.id.price_label);
                     TextView changeTextView = (TextView) findViewById(R.id.change_label);
                     TextView changePercentTextView = (TextView) findViewById(R.id.change_percent_label);
-                    TextView dayRangeTextView = (TextView) findViewById(R.id.day_range);
                     TextView priceSourceView = (TextView) findViewById(R.id.price_source);
                     TextView latestTimeView = (TextView) findViewById(R.id.latest_time);
 
                     String price = response.getString("latestPrice");
                     String priceSource = response.getString("latestSource");
                     String latestTime = response.getString("latestTime");
-                    String dayLow = response.getString("low");
-                    String dayHigh = response.getString("high");
                     String change = response.getString("change");
                     Double changePercent = Double.parseDouble(response.getString("changePercent"));
                     changePercent = changePercent * 100;
@@ -131,12 +128,6 @@ public class VolleyActivity extends AppCompatActivity {
                     latestTimeView.setText(latestTime);
                     changeTextView.setText(change);
                     changePercentTextView.setText(new DecimalFormat("#.###").format(changePercent));
-                    if (dayLow != null && !dayLow.isEmpty()) {
-                        dayRangeTextView.setText(dayLow + " - " + dayHigh);
-                    } else {
-                        dayRangeTextView.setText("Markets are currently closed");
-                    }
-                    dayRangeTextView.setText("694.60 - 719.14");
 
                     if (Double.parseDouble(change) < 0) {
                         changeTextView.setTextColor(Color.parseColor("#C2303D"));

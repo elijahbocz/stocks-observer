@@ -247,33 +247,6 @@
                 android:paddingVertical="2dp">
 
                 <TextView
-                    android:id="@+id/stock_day_range_label"
-                    android:layout_width="75dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/dark_blue"
-                    android:padding="6dp"
-                    android:text="@string/stock_day_range"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/off_white"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/day_range"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/off_white"
-                    android:padding="6dp"
-                    android:text="@string/day_range"
-                    android:textColor="@color/dark_blue" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="2dp">
-
-                <TextView
                     android:id="@+id/market_cap_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

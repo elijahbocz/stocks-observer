@@ -59,7 +59,7 @@ public class GraphsActivity extends AppCompatActivity {
         String date_to = dateFormat.format(date);
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -7 );
+        cal.add(Calendar.DATE, -10 );
         Date to_date1 = cal.getTime();
         String date_from = dateFormat.format(to_date1);
 
@@ -71,6 +71,7 @@ public class GraphsActivity extends AppCompatActivity {
                 VolleyLog.wtf(response.toString());
                 LineChart lineChart = (LineChart) findViewById(R.id.week_chart);
                 ArrayList<Entry> lineEntries = new ArrayList<>();
+                int day = 0;
                 try {
                     JSONArray arr = response.getJSONArray("data");
                     for (int i = 0; i < arr.length(); i++) {
@@ -79,9 +80,10 @@ public class GraphsActivity extends AppCompatActivity {
                         Log.d(TAG, arr.getJSONObject(i).toString());
                         String high = arr.getJSONObject(i).getString("high");
                         float fhigh = Float.parseFloat(high);
-                        String day = String.valueOf(parts[2].charAt(0));
-                        day += String.valueOf(parts[2].charAt(1));
-                        lineEntries.add(new Entry(Float.parseFloat(day), fhigh));
+//                        String day = String.valueOf(parts[2].charAt(0));
+//                        day += String.valueOf(parts[2].charAt(1));
+//                        Log.d(TAG, day);
+                        lineEntries.add(new Entry(day++, fhigh));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
